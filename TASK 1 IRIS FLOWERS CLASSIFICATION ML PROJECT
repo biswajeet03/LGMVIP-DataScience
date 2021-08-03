@@ -1,0 +1,63 @@
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+import numpy as np
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+
+print(iris.keys())
+print(iris['DESCR'][:200] + "\n...")
+
+print(iris['target_names'])
+print(iris['feature_names'])
+print(iris['data'])
+print(iris['data'].shape)
+
+
+features = iris.data.T
+
+
+print(features[0])
+print(iris.feature_names[0])
+
+print(features[1])
+print(iris.feature_names[1])
+
+sepal_length = features[0]
+sepal_width = features[1]
+petal_length = features[2]
+
+sepal_length_label = iris.feature_names[0]
+sepal_width_label = iris.feature_names[1]
+petal_length_label = iris.feature_names[2]
+
+
+plt.scatter(sepal_length, sepal_width, c=iris.target)
+plt.xlabel(sepal_length_label)
+plt.ylabel(sepal_width_label)
+
+plt.show()
+
+plt.scatter(petal_length, sepal_width, c=iris.target)
+plt.xlabel(petal_length_label)
+plt.ylabel(sepal_width_label)
+
+plt.show()
+
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(iris['data'], iris['target'], random_state=0)
+knn = KNeighborsClassifier(n_neighbors=1)
+
+knn.fit(X_train, y_train)
+
+X_new = np.array([[5, 2.9, 1, 0.2]])
+print(X_new.shape)
+
+prediction = knn.predict(X_new)
+print(prediction)
+
+print(iris['target_names'][prediction])
+
+print(knn.score(X_test, y_test))
